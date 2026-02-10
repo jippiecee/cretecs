@@ -1,0 +1,308 @@
+/* ========================================
+   PEMBAYARAN PAGE - Custom Styles
+   ======================================== */
+
+/* Smooth scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #667eea, #764ba2);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #5568d3, #6b4a8a);
+}
+
+/* Payment Option Hover Effects */
+.payment-option {
+    transition: transform 0.3s ease;
+}
+
+.payment-option:hover {
+    transform: translateY(-4px);
+}
+
+.payment-option:hover .payment-card {
+    border-color: #667eea;
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.15);
+}
+
+/* Form Input Focus Animation */
+input:focus,
+textarea:focus {
+    transform: translateY(-1px);
+}
+
+/* Drop Zone Styling */
+#dropZone {
+    transition: all 0.3s ease;
+    border-style: solid;
+}
+
+#dropZone:hover,
+#dropZone.dragover {
+    border-color: #667eea;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+}
+
+#dropZone.dragover {
+    transform: scale(1.02);
+}
+
+/* Button Hover Effects */
+button[type="submit"]:hover {
+    background: linear-gradient(135deg, #5568d3 0%, #6b4a8a 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.35);
+}
+
+button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+/* Modal Overlay */
+#successModal {
+    transition: opacity 0.3s ease;
+}
+
+#successModal.active {
+    opacity: 1;
+}
+
+/* Toast Animation */
+#toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Loading Animation */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* Number Copy Animation */
+@keyframes copyFlash {
+    0%, 100% {
+        background: transparent;
+    }
+    50% {
+        background: rgba(255, 255, 255, 0.3);
+    }
+}
+
+.copied {
+    animation: copyFlash 0.5s ease;
+}
+
+/* Image Preview Animation */
+#previewImage {
+    transition: transform 0.3s ease;
+}
+
+#previewImage:hover {
+    transform: scale(1.05);
+}
+
+/* Cart Items Animation */
+.cart-item {
+    animation: slideInLeft 0.4s ease-out;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Order Summary Card */
+.sticky {
+    position: sticky;
+    position: -webkit-sticky;
+}
+
+/* Remove button in cart */
+.btn-remove {
+    transition: all 0.3s ease;
+}
+
+.btn-remove:hover {
+    transform: scale(1.1);
+    background-color: #ef4444 !important;
+    color: white !important;
+}
+
+/* Quantity controls */
+.qty-btn {
+    transition: all 0.2s ease;
+}
+
+.qty-btn:hover {
+    transform: scale(1.1);
+}
+
+.qty-btn:active {
+    transform: scale(0.95);
+}
+
+/* Link hover effects */
+footer a:hover {
+    color: #667eea;
+}
+
+/* Smooth transitions for all interactive elements */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+    body {
+        background: white;
+    }
+    
+    .fixed {
+        position: static;
+    }
+    
+    #dropZone,
+    button[type="submit"],
+    .bg-gradient-to-r {
+        display: none;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .payment-card {
+        padding: 1rem !important;
+    }
+    
+    .payment-card .w-12 {
+        width: 2.5rem !important;
+        height: 2.5rem !important;
+    }
+    
+    .payment-card .w-12 i {
+        font-size: 1rem !important;
+    }
+    
+    #transferInfo {
+        padding: 1rem !important;
+    }
+    
+    #transferInfo .font-mono {
+        font-size: 1rem !important;
+    }
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+    /* Add dark mode styles if needed */
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Selection color */
+::selection {
+    background: rgba(102, 126, 234, 0.3);
+    color: #1e293b;
+}
+
+/* Placeholder styling */
+::placeholder {
+    color: #94a3b8;
+    opacity: 1;
+}
+
+:-ms-input-placeholder {
+    color: #94a3b8;
+}
+
+/* Custom checkbox/radio styling */
+input[type="radio"]:checked + div {
+    border-color: #667eea;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+/* Success modal icon animation */
+@keyframes successBounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1.2);
+    }
+    50% {
+        transform: scale(0.95);
+    }
+    70% {
+        transform: scale(1.05);
+    }
+}
+
+.animate-bounce {
+    animation: successBounce 0.6s ease-out;
+}
+
+/* Card hover effect */
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Gradient text animation */
+@keyframes gradientText {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.animate-gradient-text {
+    background-size: 200% auto;
+    animation: gradientText 3s ease infinite;
+}
+
