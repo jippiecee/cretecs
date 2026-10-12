@@ -1,12 +1,12 @@
-# Cretecs — thrift shop (React + Vite + Lenis + Supabase)
-1. `npm install`
-2. Salin `.env.example` → `.env`, isi URL & anon key Supabase.
-3. Supabase → SQL Editor → jalankan `supabase/schema.sql`.
-4. Supabase → Authentication → aktifkan Email provider.
-5. `npm run dev`
+Cretecs is an online thrift shop for secondhand clothes. Every piece is picked one by one and there's only one of each, so once it's sold, it's gone. You can browse the collection, filter by category, make an account, add items to a bag, and place an order. It's built with React, Vite, Lenis, Lucide, and Supabase.
 
-Tanpa `.env` web jalan dalam mode demo (produk lokal, tanpa login/order).
+License and usage Copyright © 2026 Hanif Ibrahim Umbara. All rights reserved.
+You are welcome to read the code to learn from it. You may not copy, redistribute, or publish this project, in whole or in part, as your own portfolio, shop, or website. That includes the design, the layout, the text, and all other original content.
+If you like the work and want to use a specific idea or technique, ask first. A message is enough: IG @hanifibrrhm_
 
-## Pembayaran
-Checkout membuat row `orders` berstatus `pending`. Untuk bayar beneran, buat Supabase Edge Function
-yang memanggil Midtrans/Xendit (server key jangan di frontend), lalu webhook-nya mengubah `status` jadi `paid`.
+```
+npm install
+npm run dev
+```
+
+Created by jippiecee
