@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import Lenis from "lenis";
+import { Asterisk, ArrowRight, ArrowUpRight, LogOut, Plus, Recycle, ShoppingBag, Trash2, User, X } from "lucide-react";
 import { supabase } from "./lib/supabase";
 
 const rp = (n) => "Rp" + n.toLocaleString("id-ID");
@@ -66,25 +67,27 @@ export default function App() {
         <a className="logo" href="#top"><span className="mark">C</span>Cretecs</a>
         <nav>
           <a href="#shop">Shop</a>
-          <button onClick={() => (user ? supabase.auth.signOut() : setAuthOpen(true))}>{user ? "Logout" : "Login"}</button>
-          <button className="bag" onClick={() => setCartOpen(true)}>Bag ({count})</button>
+          <button onClick={() => (user ? supabase.auth.signOut() : setAuthOpen(true))}>
+            {user ? <><LogOut size={18} />Logout</> : <><User size={18} />Login</>}
+          </button>
+          <button className="bag" onClick={() => setCartOpen(true)}><ShoppingBag size={18} />Bag ({count})</button>
         </nav>
       </header>
 
       <main id="top">
         <section className="hero">
-          <div className="tag"><small>Pre-loved</small><i>✳</i><small>Curated</small></div>
+          <div className="tag"><small>Pre-loved</small><i><Asterisk size={14} /></i><small>Curated</small></div>
           <h1>Thrift Smarter<br />Dress <em>Second Hand</em></h1>
-          <span className="stars">✳ ✳</span>
+          <span className="stars"><Asterisk size={36} strokeWidth={1.6} /><Asterisk size={36} strokeWidth={1.6} /></span>
           <div className="hero-foot">
-            <a href="#shop" className="talk">Shop now →<small>Setiap barang dicek dan dikurasi satu per satu.</small></a>
+            <a href="#shop" className="talk"><span className="talk-t">Shop now <ArrowRight size={16} /></span><small>Setiap barang dicek dan dikurasi satu per satu.</small></a>
             <p>Cretecs menjual pakaian bekas pilihan dalam kondisi terbaik. Satu barang, satu pemilik baru, harga yang masuk akal.</p>
           </div>
         </section>
 
         <section className="stage">
-          <aside className="glass"><span className="ico">◍</span><p><b>Gaya bagus</b> nggak harus baru, cukup dipilih dengan benar.</p></aside>
-          <div className="white-card"><h2>Temukan piece favoritmu berikutnya.</h2><a href="#shop" className="btn">Lihat koleksi</a></div>
+          <aside className="glass"><span className="ico"><Recycle size={20} strokeWidth={1.6} /></span><p><b>Gaya bagus</b> nggak harus baru, cukup dipilih dengan benar.</p></aside>
+          <div className="white-card"><h2>Temukan piece favoritmu berikutnya.</h2><a href="#shop" className="btn">Lihat koleksi <ArrowUpRight size={16} /></a></div>
         </section>
 
         <section id="shop" className="shop">
@@ -98,7 +101,7 @@ export default function App() {
                   <span>{p.condition}</span>
                 </div>
                 <div className="meta"><h3>{p.name}</h3><small>Size {p.size} · {p.category}</small></div>
-                <div className="buy"><b>{rp(p.price)}</b><button onClick={() => add(p)}>Tambah ke tas</button></div>
+                <div className="buy"><b>{rp(p.price)}</b><button onClick={() => add(p)}><Plus size={15} />Tambah ke tas</button></div>
               </article>
             ))}
           </div>
@@ -108,9 +111,9 @@ export default function App() {
 
       {cartOpen && <div className="scrim" onClick={() => setCartOpen(false)} />}
       <aside className={"drawer" + (cartOpen ? " open" : "")} data-lenis-prevent>
-        <div className="d-head"><h3>Tas belanja</h3><button onClick={() => setCartOpen(false)}>Tutup</button></div>
+        <div className="d-head"><h3>Tas belanja</h3><button aria-label="Tutup" onClick={() => setCartOpen(false)}><X size={20} /></button></div>
         {cart.length === 0 ? <p className="empty">Tasmu kosong. Pilih barang dari koleksi.</p> : cart.map((i) => (
-          <div key={i.id} className="line"><div><b>{i.name}</b><small>{rp(i.price)}</small></div><button onClick={() => remove(i.id)}>Hapus</button></div>
+          <div key={i.id} className="line"><div><b>{i.name}</b><small>{rp(i.price)}</small></div><button aria-label="Hapus" onClick={() => remove(i.id)}><Trash2 size={16} /></button></div>
         ))}
         <div className="d-foot"><div><span>Total</span><b>{rp(total)}</b></div>
           <button className="btn" disabled={!cart.length} onClick={checkout}>{user ? "Checkout" : "Login untuk checkout"}</button></div>
