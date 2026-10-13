@@ -149,3 +149,61 @@ footer{display:flex;justify-content:space-between;padding:30px 5vw 40px;color:va
 .login .form .btn{align-self:stretch;width:100%;justify-content:center;height:48px;padding:0 22px}
 .login .form .link{align-self:center;text-align:center;padding:6px 0}
 .login .form .err{margin:0;text-align:center}
+
+/* halaman jual */
+.page.sell{max-width:1120px}
+.eyebrow{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:12px}
+.sell h1{margin-bottom:10px}.sub{color:var(--mute);margin-bottom:36px}
+.sell-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:40px;align-items:start}
+.sell-form{background:#fff;border:1px solid var(--line);border-radius:1.6rem;padding:30px;display:flex;flex-direction:column;gap:24px}
+.field{display:flex;flex-direction:column;gap:8px}
+.lbl{font-size:.85rem;font-weight:500}.lbl small{color:var(--mute);font-weight:400}
+.in{width:100%;height:48px;padding:0 16px;border:1px solid transparent;border-radius:.9rem;background:var(--bg);font:inherit;color:var(--ink);transition:border-color .2s,background .2s}
+textarea.in{height:auto;min-height:110px;padding:14px 16px;resize:vertical}
+.in:focus{outline:none;border-color:var(--ink);background:#fff}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.money{position:relative}.money span{position:absolute;left:16px;top:50%;translate:0 -50%;color:var(--mute);font-size:.9rem}.money .in{padding-left:42px}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{height:38px;padding:0 16px;border-radius:99px;border:1px solid var(--line);font-size:.9rem;transition:.2s}
+.seg button:hover{border-color:var(--ink)}.seg .on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.drop{position:relative;display:grid;place-items:center;aspect-ratio:16/10;border:1.5px dashed #c9c7c0;border-radius:1.2rem;background:var(--bg);cursor:pointer;overflow:hidden;transition:.2s}
+.drop:hover,.drop.over{border-color:var(--ink);background:#efeeea}.drop.has{border-style:solid;border-color:transparent}
+.drop img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.drop-empty{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:20px}
+.drop-empty b{font-weight:500}.drop-empty small{color:var(--mute)}
+.drop-x{position:absolute;top:12px;right:12px;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.65);color:#fff}
+.sell-btn{align-self:stretch;width:100%;height:50px;justify-content:center;font-size:1rem}
+.sell-preview{position:sticky;top:100px;display:flex;flex-direction:column;gap:12px}
+.sell-h2{font-weight:500;font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-.03em;margin:64px 0 24px}
+.mine{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:20px}
+.mine-card{display:flex;flex-direction:column;gap:4px}
+.mine-card small{color:var(--mute)}
+.mine-img{aspect-ratio:4/5;border-radius:1.1rem;background:#d9d6cf center/cover;margin-bottom:8px}
+.mine-st{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;margin-top:4px;padding:5px 11px;border-radius:99px;font-size:.78rem;background:#ece9e2}
+.mine-st.approved{background:#e2f0e5;color:#1f6b36}.mine-st.rejected{background:#f6e3e1;color:#9b2c22}
+@media(max-width:900px){.sell-grid{grid-template-columns:1fr}.sell-preview{display:none}.sell-form{padding:22px}}
+
+/* upgrade halaman jual */
+.prog{display:flex;flex-direction:column;gap:8px}
+.prog-top{display:flex;justify-content:space-between;font-size:.82rem;color:var(--mute)}
+.prog-bar{height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.prog-bar i{display:block;height:100%;background:var(--ink);border-radius:99px;transition:width .5s cubic-bezier(.22,1,.36,1)}
+.photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:10px;border:1.5px dashed #c9c7c0;border-radius:1.2rem;background:var(--bg);transition:.2s}
+.photos.over{border-color:var(--ink);background:#efeeea}
+.ph{position:relative;aspect-ratio:4/5;border-radius:.8rem;overflow:hidden;background:#e4e2dc}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph-cover,.ph-mk{position:absolute;left:8px;bottom:8px;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:99px;font-size:.72rem;background:var(--ink);color:#fff}
+.ph-mk{background:rgba(255,255,255,.92);color:var(--ink);opacity:0;transition:.2s}
+.ph:hover .ph-mk{opacity:1}
+.ph-x{position:absolute;top:8px;right:8px;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.65);color:#fff}
+.ph.add{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;padding:10px;background:transparent;border:1px dashed #c9c7c0;color:var(--mute);font-size:.8rem;cursor:pointer;transition:.2s}
+.ph.add:hover{border-color:var(--ink);color:var(--ink)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.stat{padding:16px 18px;border-radius:1.1rem;background:#fff;border:1px solid var(--line)}
+.stat b{display:block;font-size:1.7rem;font-weight:500;letter-spacing:-.03em}.stat small{color:var(--mute)}
+.tabs{margin-bottom:24px}
+.mine-card{position:relative}
+.mine-del{position:absolute;top:10px;right:10px;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.92);opacity:0;transition:.2s}
+.mine-card:hover .mine-del{opacity:1}.mine-del:hover{color:#b3261e}
+@media(hover:none){.mine-del,.ph-mk{opacity:1}}
+@media(max-width:560px){.photos{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{gap:8px}.stat{padding:12px}}
