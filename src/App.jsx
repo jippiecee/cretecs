@@ -57,7 +57,6 @@ export default function App() {
         <nav>
           <a href="/#shop">Shop</a>
           {user && <Link to="/dashboard">Dashboard</Link>}
-          {user && <Link to="/sell">Jual</Link>}
           {isAdmin && <Link to="/admin">Admin</Link>}
           {user
             ? <button onClick={() => supabase.auth.signOut()}><LogOut size={18} />Logout</button>

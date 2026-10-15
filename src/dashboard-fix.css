@@ -1,0 +1,33 @@
+/* Dashboard polish (pakai .dash biar menang dari index.css) */
+
+/* Sidebar: icon seragam */
+.dash .dl svg{flex:none;width:18px;height:18px}
+
+/* Pill status sejajar dengan teks di sampingnya */
+.dash .tbl-row .mine-st{align-self:center;margin:0;height:30px;padding:0 12px;font-size:.85rem;line-height:1;white-space:nowrap}
+.dash .tbl-row .mine-st svg{flex:none}
+.dash .tbl-row .mine-st .chev{margin-left:2px}
+
+/* Box "Mulai berjualan" sampai bawah (tinggi sama dengan Tips foto), card di dalam tetap ukuran normal */
+.dash .d-bottom{align-items:stretch}
+.dash .d-bottom>.d-card{align-self:stretch}
+.dash .d-bottom .steps{flex:none;align-content:start}
+
+/* Step card solid, tanpa glass */
+.dash .step{align-items:center;gap:14px;padding:16px 18px;background:var(--bg);border:1px dashed #d6d3cb;color:var(--mute);transition:border-color .2s,background .2s}
+.dash .step svg{margin-top:0;color:#b5b3ab}
+.dash .step b{color:var(--mute);margin-bottom:2px}
+.dash .step small{color:var(--mute)}
+.dash .step.ok{background:#fff;border:1px solid #1f6b36}
+.dash .step.ok svg{color:#1f6b36}
+.dash .step.ok b{color:var(--ink)}
+
+/* Placeholder halaman */
+.dash .soon{align-items:center;text-align:center;padding:70px 20px!important;gap:8px}
+.dash .soon b{font-size:1.1rem;font-weight:500}
+
+/* ===== Akun user (non-penjual): konten di tengah, kartu 2 kolom ===== */
+main.ac{max-width:1040px;margin:0 auto}
+main.ac .ac-grid,main.ac .ac-flow{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(min-width:821px){main.ac .ac-body{grid-template-columns:230px minmax(0,1fr);gap:56px}}
+@media(max-width:560px){main.ac .ac-grid,main.ac .ac-flow{grid-template-columns:1fr}}

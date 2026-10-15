@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Area, AreaChart, Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { Boxes, CheckCircle2, ChevronRight, Circle, Clock, ExternalLink, Heart, LayoutDashboard, LifeBuoy, LogOut, PackageCheck, Plus, Ruler, Settings, Shirt, ShoppingBag, Sun, Trash2, Truck, X, XCircle } from "lucide-react";
+import { Boxes, CheckCircle2, ChevronRight, Circle, Clock, ExternalLink, Heart, LayoutDashboard, LifeBuoy, LogOut, Package, PackageCheck, Plus, Ruler, Settings, Shirt, ShoppingBag, SquarePlus, Store, Sun, Trash2, Truck, X, XCircle } from "lucide-react";
 import { supabase } from "../lib/supabase";
+import "../dashboard-fix.css";
 import { HelpView, SettingsView } from "./SellerViews";
 
 const rp = (n) => "Rp" + Number(n || 0).toLocaleString("id-ID");
@@ -11,7 +12,6 @@ const ST = { pending: [Clock, "Menunggu"], approved: [CheckCircle2, "Disetujui"]
 const SALE = { available: [ShoppingBag, "Dijual"], shipping: [Truck, "Dikirim"], sold: [PackageCheck, "Terjual"] };
 const CATS = ["Atasan", "Bawahan", "Jaket", "Aksesoris", "Lainnya"];
 const CONDS = ["Like new", "Good", "Fair"];
-const SHADES = ["#1c1c1c", "#8a8a86", "#c9c7c0"];
 const tip = { borderRadius: 12, border: "1px solid #e3e1db", fontSize: 12, boxShadow: "none" };
 const TIPS = [
   [Sun, "Foto di cahaya alami", "Hasil lebih jelas dan warnanya sesuai aslinya."],
@@ -159,16 +159,13 @@ export default function SellerDashboard({ user, profile, notify = () => {} }) {
     });
     const week = DAYS.map((l, i) => ({ l, n: L.filter((p) => new Date(p.created_at).getDay() === i).length }));
     const peak = Math.max(...week.map((w) => w.n));
-    const byCat = {};
-    sold.forEach((p) => { byCat[p.category] = (byCat[p.category] || 0) + 1; });
-    const cats = Object.entries(byCat).sort((a, b) => b[1] - a[1]).slice(0, 3);
     const table = [...L].sort((a, b) => b.love_count - a.love_count || new Date(b.created_at) - new Date(a.created_at));
     return {
       total: L.length, approved: n("approved"), pending: n("pending"),
       sold: sold.length, shipping: L.filter((p) => p.sale_status === "shipping").length,
       loves: L.reduce((a, p) => a + p.love_count, 0),
       pct: L.length ? Math.round((n("approved") / L.length) * 100) : 0,
-      series, week, peak, cats, table,
+      series, week, peak, table,
     };
   }, [list]);
 
@@ -191,7 +188,10 @@ export default function SellerDashboard({ user, profile, notify = () => {} }) {
       <aside className="dash-side">
         <Link className="logo" to="/"><span className="mark">C</span>Cretecs</Link>
         <button className={"dl" + (view === "dash" ? " on" : "")} onClick={() => go("dash")}><LayoutDashboard size={18} />Dashboard</button>
-        <Link className="dl" to="/sell"><Plus size={18} />Jual barang</Link>
+        <Link className="dl" to="/sell"><SquarePlus size={18} />Jual barang</Link>
+        <button className={"dl" + (view === "orders" ? " on" : "")} onClick={() => go("orders")}><Package size={18} />Pesanan</button>
+        <button className={"dl" + (view === "loves" ? " on" : "")} onClick={() => go("loves")}><Heart size={18} />Love saya</button>
+        <button className={"dl" + (view === "shop" ? " on" : "")} onClick={() => go("shop")}><Store size={18} />Profil toko</button>
         <Link className="dl" to="/"><ExternalLink size={18} />Lihat toko</Link>
 
         <div className="side-bottom">
@@ -207,6 +207,12 @@ export default function SellerDashboard({ user, profile, notify = () => {} }) {
       <section className="dash-main">
         {view === "settings" && <SettingsView />}
         {view === "help" && <HelpView />}
+        {["orders", "loves", "shop"].includes(view) && (
+          <div className="d-card soon">
+            <b>Halaman ini segera hadir</b>
+            <small>Lagi disiapkan, nanti bisa kamu pakai di sini.</small>
+          </div>
+        )}
         {view === "dash" && (
           <>
             <div className="dash-top">
@@ -240,12 +246,6 @@ export default function SellerDashboard({ user, profile, notify = () => {} }) {
                         <Area type="monotone" dataKey="total" stroke="#1c1c1c" strokeWidth={2} fill="url(#ga)" />
                       </AreaChart>
                     </ResponsiveContainer>
-                  </div>
-                  <div className="cats">
-                    {d.cats.length === 0 && <small>Belum ada barang terjual.</small>}
-                    {d.cats.map(([c, v], i) => (
-                      <div className="cat" key={c} style={{ "--c": SHADES[i] }}><small>{c}</small><b>{v}</b></div>
-                    ))}
                   </div>
                 </div>
 

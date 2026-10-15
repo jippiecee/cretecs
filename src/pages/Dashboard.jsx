@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { BadgeCheck, CalendarDays, Clock, Heart, Mail, MailWarning, PackageCheck, ShieldCheck, ShoppingBag, Store, Truck, Wallet } from "lucide-react";
+import { BadgeCheck, CalendarDays, Heart, Mail, MailWarning, PackageCheck, ShieldCheck, ShoppingBag, Store, Wallet } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import SellerDashboard from "../components/SellerDashboard";
 
@@ -8,12 +8,6 @@ const rp = (n) => "Rp" + Number(n || 0).toLocaleString("id-ID");
 const OST = { pending: "Menunggu bayar", paid: "Dibayar", shipped: "Dikirim", completed: "Selesai", cancelled: "Dibatalkan" };
 const OCLS = { pending: "", paid: "approved", shipped: "sale-shipping", completed: "sale-sold", cancelled: "rejected" };
 const fmt = (v) => new Date(v).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
-const FLOW = [
-  [Clock, "Menunggu bayar", "Pesanan dibuat, lalu selesaikan pembayaran."],
-  [Wallet, "Dibayar", "Pembayaran diterima, penjual menyiapkan barang."],
-  [Truck, "Dikirim", "Barang dalam perjalanan ke alamatmu."],
-  [PackageCheck, "Selesai", "Konfirmasi barang diterima, lalu beri love ke penjual."],
-];
 
 export default function Dashboard({ user, profile, ready, refreshProfile, notify }) {
   if (!ready) return null;
@@ -28,7 +22,6 @@ function Account({ user, profile, refreshProfile, notify }) {
   const [tab, setTab] = useState("info"); // info | orders
   const [orders, setOrders] = useState([]);
   const [loves, setLoves] = useState(0);
-  const [favs, setFavs] = useState([]);
   const [store, setStore] = useState("");
   const [busy, setBusy] = useState(false);
   const [sellers, setSellers] = useState({}); // order_id -> [{ seller_id, store_name, loved }]
@@ -49,16 +42,9 @@ function Account({ user, profile, refreshProfile, notify }) {
     const res = await Promise.all(done.map((o) => supabase.rpc("order_sellers", { oid: o.id }).then(({ data }) => [o.id, data ?? []])));
     setSellers(Object.fromEntries(res));
   };
-
   useEffect(() => {
     loadOrders();
-    supabase.from("loves").select("product_id").then(async ({ data }) => {
-      const ids = (data ?? []).map((r) => r.product_id);
-      setLoves(ids.length);
-      if (!ids.length) return;
-      const { data: ps } = await supabase.from("shop_products").select("id,name,price,image_url").in("id", ids.slice(0, 8));
-      setFavs(ps ?? []);
-    });
+    supabase.from("loves").select("product_id", { count: "exact", head: true }).then(({ count }) => setLoves(count ?? 0));
   }, [user.id]);
 
   useEffect(() => {
@@ -132,7 +118,8 @@ function Account({ user, profile, refreshProfile, notify }) {
       </div>
 
       <div className="ac-body">
-        <aside className="ac-side">
+        {/* static: tidak ikut turun saat di-scroll */}
+        <aside className="ac-side" style={{ position: "static" }}>
           <div className="ac-ava">{(name[0] || "?").toUpperCase()}</div>
           <b className="ac-name">{name}</b>
           <small className="ac-mail">{user.email}</small>
@@ -233,34 +220,6 @@ function Account({ user, profile, refreshProfile, notify }) {
                   )}
                 </article>
               ))}
-
-              <h3 className="ac-sec">Alur pesanan</h3>
-              <div className="ac-flow">
-                {FLOW.map(([Icon, label, desc], i) => (
-                  <div className="ac-card" key={label}>
-                    <div className="ac-top"><span>{i + 1}. {label}</span><i className="ac-ico"><Icon size={17} strokeWidth={1.7} /></i></div>
-                    <small>{desc}</small>
-                  </div>
-                ))}
-              </div>
-
-              <h3 className="ac-sec">Barang yang kamu love</h3>
-              {favs.length === 0 ? (
-                <div className="empty-box">
-                  <p>Belum ada barang yang kamu love.</p>
-                  <p><a href="/#shop">Jelajahi koleksi</a> dan tekan ikon hati untuk menyimpan barang.</p>
-                </div>
-              ) : (
-                <div className="ac-favs">
-                  {favs.map((p) => (
-                    <div className="ac-fav" key={p.id}>
-                      <i style={{ backgroundImage: `url(${p.image_url})` }} />
-                      <b>{p.name}</b>
-                      <small>{rp(p.price)}</small>
-                    </div>
-                  ))}
-                </div>
-              )}
             </>
           )}
         </section>

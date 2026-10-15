@@ -4,6 +4,7 @@ import { ImagePlus, Star, X } from "lucide-react";
 // Area foto besar + thumbnail. Semua state foto ada di halaman induk.
 export default function PhotoStage({ photos, active, max, onActive, onAdd, onRemove, onCover }) {
   const [drag, setDrag] = useState(false);
+  const [off, setOff] = useState(false); // foto bukan 4:3 -> dipotong
   const shown = photos[active] || photos[0];
 
   const drop = {
@@ -21,11 +22,14 @@ export default function PhotoStage({ photos, active, max, onActive, onAdd, onRem
             <span className="sx-drop-ic"><ImagePlus size={34} strokeWidth={1.4} /></span>
             <b>Tarik foto ke sini</b>
             <small>atau klik untuk pilih dari galeri.<br />Sampai {max} foto, maksimal 3 MB per foto.</small>
+            <span className="sx-ratio">Rasio 4:3 paling pas</span>
             <input type="file" accept="image/*" multiple hidden onChange={pick} />
           </label>
         ) : (
           <>
-            <img className="sx-main" src={shown.url} alt="Foto barang" />
+            <img className="sx-main" src={shown.url} alt="Foto barang"
+              onLoad={(e) => setOff(Math.abs(e.target.naturalWidth / e.target.naturalHeight - 4 / 3) > 0.03)} />
+            {off && <span className="sx-crop">Dipotong ke 4:3</span>}
             <div className="sx-top">
               {photos[0] === shown
                 ? <span className="sx-pill dark">Sampul</span>
@@ -48,7 +52,7 @@ export default function PhotoStage({ photos, active, max, onActive, onAdd, onRem
             <input type="file" accept="image/*" multiple hidden onChange={pick} />
           </label>
         )}
-        <span className="sx-hint">{photos.length}/{max} foto · foto pertama jadi sampul</span>
+        <span className="sx-hint">{photos.length}/{max} foto · foto pertama jadi sampul · rasio 4:3</span>
       </div>
     </div>
   );
