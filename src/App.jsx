@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, Route, Routes, useLocation } from "react-router-dom";
+import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Lenis from "lenis";
 import { LogOut, ShoppingBag, Trash2, User, X } from "lucide-react";
 import { supabase } from "./lib/supabase";
@@ -8,11 +8,12 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Sell from "./pages/Sell";
 import Admin from "./pages/Admin";
+import Dashboard from "./pages/Dashboard";
 
 const rp = (n) => "Rp" + n.toLocaleString("id-ID");
 
 export default function App() {
-  const { user, isAdmin, ready } = useAuth();
+  const { user, profile, isAdmin, isSeller, ready, refreshProfile } = useAuth();
   const { pathname } = useLocation();
   const [cart, setCart] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
@@ -44,12 +45,18 @@ export default function App() {
     setCart([]); setCartOpen(false); setToast("Order dibuat. Pembayaran menyusul.");
   };
 
+  // /sell: hanya akun toko
+  const sellPage = !ready || (user && !profile) ? null
+    : isSeller ? <Sell user={user} ready={ready} notify={setToast} />
+    : <Navigate to={user ? "/dashboard" : "/login"} />;
+
   return (
     <>
       <header className="nav">
         <Link className="logo" to="/"><span className="mark">C</span>Cretecs</Link>
         <nav>
           <a href="/#shop">Shop</a>
+          {user && <Link to="/dashboard">Dashboard</Link>}
           {user && <Link to="/sell">Jual</Link>}
           {isAdmin && <Link to="/admin">Admin</Link>}
           {user
@@ -62,7 +69,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home user={user} onAdd={add} notify={setToast} />} />
         <Route path="/login" element={<Login notify={setToast} />} />
-        <Route path="/sell" element={<Sell user={user} ready={ready} notify={setToast} />} />
+        <Route path="/sell" element={sellPage} />
+        <Route path="/dashboard" element={<Dashboard user={user} profile={profile} ready={ready} refreshProfile={refreshProfile} notify={setToast} />} />
         <Route path="/admin" element={<Admin user={user} isAdmin={isAdmin} ready={ready} notify={setToast} />} />
       </Routes>
 

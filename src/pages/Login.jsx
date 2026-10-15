@@ -15,17 +15,20 @@ export default function Login({ notify }) {
     e.preventDefault();
     if (!supabase) return setErr("Supabase belum dikonfigurasi (.env).");
     setErr(""); setBusy(true);
-    const { error } = mode === "login"
-      ? await supabase.auth.signInWithPassword({ email, password })
-      : await supabase.auth.signUp({ email, password });
+
+    if (mode === "login") {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      setBusy(false);
+      if (error) return setErr(error.message);
+      return nav("/");
+    }
+
+    const { data, error } = await supabase.auth.signUp({ email, password });
     setBusy(false);
     if (error) return setErr(error.message);
-    if (mode === "signup") {
-      notify("Akun dibuat. Cek email untuk verifikasi, lalu login.");
-      setMode("login");
-      return;
-    }
-    nav("/");
+    if (data.session) { notify("Akun dibuat. Selamat datang!"); return nav("/"); }
+    notify("Akun dibuat. Cek email untuk verifikasi, lalu login.");
+    setMode("login");
   };
 
   // Opsional: butuh provider Google diaktifkan di Supabase > Authentication > Providers.

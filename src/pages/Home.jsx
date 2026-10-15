@@ -5,6 +5,13 @@ import { supabase } from "../lib/supabase";
 
 const rp = (n) => "Rp" + n.toLocaleString("id-ID");
 
+// Skor beranda: love toko paling berat, love barang membantu, barang baru dapat bonus kecil
+// (bonus turun habis dalam 14 hari) supaya toko baru tetap punya kesempatan tampil.
+const score = (p) => {
+  const days = (Date.now() - new Date(p.created_at)) / 864e5;
+  return (p.seller_love || 0) + (p.love_count || 0) * 0.5 + Math.max(0, 10 * (1 - days / 14));
+};
+
 export default function Home({ user, onAdd, notify }) {
   const nav = useNavigate();
   const [products, setProducts] = useState([]);
@@ -13,7 +20,7 @@ export default function Home({ user, onAdd, notify }) {
 
   useEffect(() => {
     if (!supabase) return;
-    supabase.from("products").select("*").eq("status", "approved").gt("stock", 0).order("created_at", { ascending: false })
+    supabase.from("shop_products").select("*").order("created_at", { ascending: false })
       .then(({ data }) => setProducts(data ?? []));
   }, []);
 
@@ -34,7 +41,10 @@ export default function Home({ user, onAdd, notify }) {
   };
 
   const cats = useMemo(() => ["Semua", ...new Set(products.map((p) => p.category))], [products]);
-  const shown = filter === "Semua" ? products : products.filter((p) => p.category === filter);
+  const shown = useMemo(() => {
+    const base = filter === "Semua" ? products : products.filter((p) => p.category === filter);
+    return [...base].sort((a, b) => score(b) - score(a));
+  }, [products, filter]);
 
   return (
     <>
@@ -68,7 +78,9 @@ export default function Home({ user, onAdd, notify }) {
                     <Heart size={15} fill={loved.has(p.id) ? "currentColor" : "none"} />{p.love_count}
                   </button>
                 </div>
-                <div className="meta"><h3>{p.name}</h3><small>Size {p.size || "-"} · {p.category}</small></div>
+                <div className="meta"><h3>{p.name}</h3><small>Size {p.size || "-"} · {p.category}</small>
+                  {p.store_name && <small className="shop-by"><Heart size={11} />{p.store_name} · {p.seller_love}</small>}
+                </div>
                 <div className="buy"><b>{rp(p.price)}</b><button onClick={() => onAdd(p)}><Plus size={15} />Tambah ke tas</button></div>
               </article>
             ))}

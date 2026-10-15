@@ -3,7 +3,7 @@ import { supabase } from "./supabase";
 
 export function useAuth() {
   const [user, setUser] = useState(null);
-  const [role, setRole] = useState(null);
+  const [profile, setProfile] = useState(null);
   const [ready, setReady] = useState(!supabase);
 
   useEffect(() => {
@@ -13,11 +13,20 @@ export function useAuth() {
     return () => sub.subscription.unsubscribe();
   }, []);
 
+  const fetchProfile = async (id) => {
+    const { data } = await supabase.from("profiles").select("role,is_seller,store_name").eq("id", id).single();
+    setProfile(data ?? { role: "user", is_seller: false, store_name: null });
+  };
+
   useEffect(() => {
-    if (!user) return setRole(null);
-    supabase.from("profiles").select("role").eq("id", user.id).single()
-      .then(({ data }) => setRole(data?.role ?? "user"));
+    if (!user) return setProfile(null);
+    fetchProfile(user.id);
   }, [user?.id]);
 
-  return { user, isAdmin: role === "admin", ready };
+  return {
+    user, profile, ready,
+    isAdmin: profile?.role === "admin",
+    isSeller: !!profile?.is_seller,
+    refreshProfile: () => user && fetchProfile(user.id),
+  };
 }

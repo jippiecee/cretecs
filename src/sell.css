@@ -1,0 +1,90 @@
+/* ===== halaman jual (prefix sp-) ===== */
+.page.sp{max-width:1120px}
+.sp-back{display:inline-flex;align-items:center;gap:8px;color:var(--mute);font-size:.9rem;margin-bottom:22px;transition:color .2s}
+.sp-back:hover{color:var(--ink)}
+.sp-head{margin-bottom:32px}
+.sp-head h1{margin-bottom:8px}
+.sp-head p{color:var(--mute)}
+
+.sp-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,.8fr);gap:28px;align-items:start}
+.sp-main{display:flex;flex-direction:column;gap:18px}
+.sp-card{background:#fff;border:1px solid var(--line);border-radius:1.4rem;padding:24px;display:flex;flex-direction:column;gap:18px}
+
+.sp-title{display:flex;align-items:flex-start;gap:14px}
+.sp-title i{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-style:normal;font-size:.85rem;font-weight:500}
+.sp-title h2{font-size:1.1rem;font-weight:500;letter-spacing:-.01em}
+.sp-title h2 em{font-style:normal;color:var(--mute);font-weight:400;font-size:.9rem}
+.sp-title small{color:var(--mute);font-size:.84rem;line-height:1.4;display:block;margin-top:2px}
+.sp-count{margin-left:auto;color:var(--mute);font-size:.85rem;padding-top:4px}
+
+.sp-field{display:flex;flex-direction:column;gap:8px}
+.sp-field>label{font-size:.88rem;font-weight:500}
+.sp-field>label small{color:var(--mute);font-weight:400;margin-left:4px}
+.sp-in{width:100%;height:50px;padding:0 16px;border:1px solid var(--line);border-radius:.9rem;background:var(--bg);font:inherit;color:var(--ink);transition:border-color .2s,background .2s}
+.sp-in:focus{outline:none;border-color:var(--ink);background:#fff}
+textarea.sp-in{height:auto;min-height:120px;padding:14px 16px;resize:vertical;line-height:1.5}
+.sp-cnt{align-self:flex-end;color:var(--mute);font-size:.78rem}
+.sp-money{position:relative}
+.sp-money span{position:absolute;left:16px;top:50%;translate:0 -50%;color:var(--mute);font-size:.9rem}
+.sp-money .sp-in{padding-left:44px;font-size:1.05rem;font-weight:500}
+
+.sp-chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.sp-chips button{height:40px;padding:0 18px;border-radius:99px;border:1px solid var(--line);background:#fff;font-size:.9rem;transition:.2s}
+.sp-chips button:hover{border-color:var(--ink)}
+.sp-chips button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.sp-chips .sp-size{width:170px;height:40px;border-radius:99px;font-size:.88rem;padding:0 16px}
+
+.sp-conds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.sp-conds button{display:flex;flex-direction:column;gap:4px;text-align:left;padding:14px;border-radius:1rem;border:1px solid var(--line);background:#fff;transition:.2s}
+.sp-conds button:hover{border-color:var(--ink)}
+.sp-conds button b{font-weight:500}
+.sp-conds button small{color:var(--mute);font-size:.78rem;line-height:1.35}
+.sp-conds button.on{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink) inset;background:var(--bg)}
+
+/* foto */
+.sp-drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:240px;border:1.5px dashed #c9c7c0;border-radius:1.2rem;background:var(--bg);text-align:center;cursor:pointer;transition:.2s}
+.sp-drop:hover,.sp-drop.over{border-color:var(--ink);background:#efeeea}
+.sp-drop-ic{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:#fff;margin-bottom:8px}
+.sp-drop b{font-weight:500}
+.sp-drop small{color:var(--mute)}
+.sp-photos{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:12px;padding:12px;border:1.5px dashed transparent;border-radius:1.2rem;background:var(--bg);transition:.2s}
+.sp-photos.over{border-color:var(--ink)}
+.sp-cover{position:relative;aspect-ratio:4/5;border-radius:1rem;overflow:hidden;background:#e4e2dc}
+.sp-cover img,.sp-th img{width:100%;height:100%;object-fit:cover;display:block}
+.sp-tag{position:absolute;left:10px;bottom:10px;padding:5px 12px;border-radius:99px;background:var(--ink);color:#fff;font-size:.75rem}
+.sp-thumbs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-content:start}
+.sp-th{position:relative;aspect-ratio:4/5;border-radius:.9rem;overflow:hidden;background:#e4e2dc}
+.sp-th.add{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border:1px dashed #c9c7c0;background:transparent;color:var(--mute);font-size:.8rem;cursor:pointer;transition:.2s}
+.sp-th.add:hover{border-color:var(--ink);color:var(--ink)}
+.sp-x{position:absolute;top:10px;right:10px;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.65);color:#fff}
+.sp-x.sm{top:8px;right:8px;width:26px;height:26px}
+.sp-mk{position:absolute;left:8px;bottom:8px;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:99px;font-size:.72rem;background:rgba(255,255,255,.94);color:var(--ink);opacity:0;transition:.2s}
+.sp-th:hover .sp-mk{opacity:1}
+@media(hover:none){.sp-mk{opacity:1}}
+
+/* sidebar */
+.sp-side{position:sticky;top:100px;display:flex;flex-direction:column;gap:18px}
+.sp-lbl{font-size:.85rem;font-weight:500}
+.sp-preview{gap:12px}
+.sp-submit{gap:14px}
+.sp-prog{height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.sp-prog i{display:block;height:100%;background:var(--ink);border-radius:99px;transition:width .5s cubic-bezier(.22,1,.36,1)}
+.sp-checks{list-style:none;display:flex;flex-direction:column;gap:8px;font-size:.9rem;color:var(--mute)}
+.sp-checks li{display:flex;align-items:center;gap:10px;transition:color .2s}
+.sp-checks li span{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line);color:#fff;transition:.2s}
+.sp-checks li.ok{color:var(--ink)}
+.sp-checks li.ok span{background:var(--ink);border-color:var(--ink)}
+.sp-btn{align-self:stretch;width:100%;height:50px;justify-content:center;font-size:1rem}
+.sp-note{color:var(--mute);font-size:.78rem;text-align:center}
+
+@media(max-width:900px){
+  .sp-grid{grid-template-columns:1fr}
+  .sp-side{position:static;order:2}
+  .sp-preview{display:none}
+}
+@media(max-width:560px){
+  .sp-card{padding:18px}
+  .sp-conds{grid-template-columns:1fr}
+  .sp-photos{grid-template-columns:1fr}
+  .sp-chips .sp-size{width:100%}
+}
