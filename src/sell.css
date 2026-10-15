@@ -92,3 +92,17 @@ textarea.sx-in{flex:1;height:auto;min-height:72px;padding:13px 16px;resize:none;
   .sx-field.grow{min-height:0}textarea.sx-in{min-height:110px}
   .sx-hint{display:none}
 }
+/* skala teks disamakan dengan halaman akun */
+.sx-field>label{font-size:1rem;font-weight:500;letter-spacing:-.005em}
+.sx-field>label small{font-size:.85rem;font-weight:400;letter-spacing:0;color:var(--mute)}
+.sx-in{font-size:1rem}
+.sx-money span{font-size:1rem}
+.sx-money .sx-in{font-size:1.15rem;font-weight:500;letter-spacing:-.01em}
+.sx-chips button,.sx-chips .sx-size{font-size:.95rem}
+.sx-seg button{font-size:.95rem}
+.sx-drop b{font-size:1.4rem;font-weight:500;letter-spacing:-.02em}
+.sx-drop small{font-size:.92rem;color:#6f6f6a;line-height:1.5}
+.sx-hint,.sx-back{font-size:.88rem}
+.sx-pill{font-size:.85rem;font-weight:500}
+.sx-btn{font-size:1rem;font-weight:500;letter-spacing:-.005em}
+.sx-head h1{line-height:1.1}

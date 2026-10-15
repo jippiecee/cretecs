@@ -51,7 +51,7 @@ export default function Home({ user, onAdd, notify }) {
       <main id="top">
         <section className="hero">
           <div className="tag"><small>Pre-loved</small><i>✳</i><small>Curated</small></div>
-          <h1>Thrift Smarter<br />Dress <em>Second Hand</em></h1>
+          <h1>Thrift Smarter<br />Embrace <em>Second love </em></h1>
           <span className="stars">✳ ✳</span>
           <div className="hero-foot">
             <a href="#shop" className="talk">Shop now →<small>Setiap barang dicek dan dikurasi satu per satu.</small></a>

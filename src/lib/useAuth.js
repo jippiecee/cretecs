@@ -14,8 +14,8 @@ export function useAuth() {
   }, []);
 
   const fetchProfile = async (id) => {
-    const { data } = await supabase.from("profiles").select("role,is_seller,store_name").eq("id", id).single();
-    setProfile(data ?? { role: "user", is_seller: false, store_name: null });
+    const { data } = await supabase.from("profiles").select("*").eq("id", id).single();
+    setProfile(data ?? { role: "user", is_seller: false, store_name: null, email_verified_at: null });
   };
 
   useEffect(() => {
