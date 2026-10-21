@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowUpRight, Heart, Plus, Recycle } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import PolaroidStack from "../components/PolaroidStack";
+import LoveQuote from "../components/LoveQuote";
 
 const rp = (n) => "Rp" + n.toLocaleString("id-ID");
 
@@ -62,6 +63,7 @@ export default function Home({ user, onAdd, notify }) {
 
         <section className="stage">
           <PolaroidStack />
+          <LoveQuote />
           <aside className="glass"><span className="ico"><Recycle size={20} strokeWidth={1.6} /></span><p><b>Gaya bagus</b> nggak harus baru, cukup dipilih dengan benar.</p></aside>
           <div className="white-card"><h2>Temukan piece favoritmu berikutnya.</h2><a href="#shop" className="btn">Lihat koleksi <ArrowUpRight size={16} /></a></div>
         </section>
