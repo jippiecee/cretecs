@@ -5,6 +5,7 @@ import { Boxes, CheckCircle2, ChevronRight, Circle, Clock, ExternalLink, Heart, 
 import { supabase } from "../lib/supabase";
 import "../dashboard-fix.css";
 import { HelpView, SettingsView } from "./SellerViews";
+import ProfileEditor from "./ProfileEditor";
 
 const rp = (n) => "Rp" + Number(n || 0).toLocaleString("id-ID");
 const DAYS = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
@@ -126,7 +127,7 @@ function ManageModal({ item, onClose, onSaved, onDeleted, notify }) {
   );
 }
 
-export default function SellerDashboard({ user, profile, notify = () => {} }) {
+export default function SellerDashboard({ user, profile, refreshProfile, notify = () => {} }) {
   const nav = useNavigate();
   const root = useRef(null);
   const [view, setView] = useState("dash"); // dash | settings | help
@@ -198,7 +199,16 @@ export default function SellerDashboard({ user, profile, notify = () => {} }) {
           <button className={"dl" + (view === "settings" ? " on" : "")} onClick={() => go("settings")}><Settings size={18} />Settings</button>
           <button className={"dl" + (view === "help" ? " on" : "")} onClick={() => go("help")}><LifeBuoy size={18} />Help &amp; Support</button>
           <div className="store-card">
-            <small>Toko kamu</small><b>{profile.store_name}</b>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <span style={{ width: 36, height: 36, borderRadius: "50%", overflow: "hidden", flex: "none", display: "grid", placeItems: "center", background: "rgba(255,255,255,.12)", fontWeight: 500 }}>
+                {profile.avatar_url
+                  ? <img src={profile.avatar_url} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  : (profile.store_name || "?")[0].toUpperCase()}
+              </span>
+              <span style={{ display: "flex", flexDirection: "column", minWidth: 0 }}>
+                <small>{profile.username ? "@" + profile.username : "Toko kamu"}</small><b>{profile.store_name}</b>
+              </span>
+            </div>
             <button onClick={out}><LogOut size={15} />Logout</button>
           </div>
         </div>
@@ -207,7 +217,13 @@ export default function SellerDashboard({ user, profile, notify = () => {} }) {
       <section className="dash-main">
         {view === "settings" && <SettingsView />}
         {view === "help" && <HelpView />}
-        {["orders", "loves", "shop"].includes(view) && (
+        {view === "shop" && (
+          <>
+            <div className="dash-top"><h1>Profil toko</h1></div>
+            <ProfileEditor seller user={user} profile={profile} refreshProfile={refreshProfile} notify={notify} />
+          </>
+        )}
+        {["orders", "loves"].includes(view) && (
           <div className="d-card soon">
             <b>Halaman ini segera hadir</b>
             <small>Lagi disiapkan, nanti bisa kamu pakai di sini.</small>

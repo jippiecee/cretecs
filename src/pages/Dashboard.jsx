@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import { BadgeCheck, CalendarDays, Heart, Mail, MailWarning, PackageCheck, ShieldCheck, ShoppingBag, Store, Wallet } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import SellerDashboard from "../components/SellerDashboard";
+import ProfileEditor from "../components/ProfileEditor";
 
 const rp = (n) => "Rp" + Number(n || 0).toLocaleString("id-ID");
 const OST = { pending: "Menunggu bayar", paid: "Dibayar", shipped: "Dikirim", completed: "Selesai", cancelled: "Dibatalkan" };
@@ -14,12 +15,12 @@ export default function Dashboard({ user, profile, ready, refreshProfile, notify
   if (!user) return <Navigate to="/login" />;
   if (!profile) return null;
   return profile.is_seller
-    ? <SellerDashboard user={user} profile={profile} notify={notify} />
+    ? <SellerDashboard user={user} profile={profile} refreshProfile={refreshProfile} notify={notify} />
     : <Account user={user} profile={profile} refreshProfile={refreshProfile} notify={notify} />;
 }
 
 function Account({ user, profile, refreshProfile, notify }) {
-  const [tab, setTab] = useState("info"); // info | orders
+  const [tab, setTab] = useState("info"); // profile | info | orders
   const [orders, setOrders] = useState([]);
   const [loves, setLoves] = useState(0);
   const [store, setStore] = useState("");
@@ -31,7 +32,7 @@ function Account({ user, profile, refreshProfile, notify }) {
   const [vbusy, setVbusy] = useState(false);
 
   const verified = !!profile.email_verified_at;
-  const name = (user.email || "").split("@")[0];
+  const name = profile.display_name || profile.username || (user.email || "").split("@")[0];
   const spent = orders.filter((o) => o.status !== "cancelled").reduce((a, o) => a + (o.total || 0), 0);
 
   const loadOrders = async () => {
@@ -109,21 +110,19 @@ function Account({ user, profile, refreshProfile, notify }) {
   ];
 
   return (
-    <main className="ac">
-      <div className="ac-head">
-        <b>Cretecs Account</b>
-        <span className={"vf" + (verified ? "" : " no")}>
-          {verified ? <><BadgeCheck size={14} />Email terverifikasi</> : <><MailWarning size={14} />Belum terverifikasi</>}
-        </span>
-      </div>
-
+    <main className="ac" style={{ paddingTop: 108 }}>
       <div className="ac-body">
         {/* static: tidak ikut turun saat di-scroll */}
         <aside className="ac-side" style={{ position: "static" }}>
-          <div className="ac-ava">{(name[0] || "?").toUpperCase()}</div>
+          <div className="ac-ava" style={{ overflow: "hidden" }}>
+            {profile.avatar_url
+              ? <img src={profile.avatar_url} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              : (name[0] || "?").toUpperCase()}
+          </div>
           <b className="ac-name">{name}</b>
-          <small className="ac-mail">{user.email}</small>
+          <small className="ac-mail">{profile.display_name && profile.username ? "@" + profile.username : user.email}</small>
           <nav className="ac-menu">
+            <button className={tab === "profile" ? "on" : ""} onClick={() => setTab("profile")}>Profil</button>
             <button className={tab === "info" ? "on" : ""} onClick={() => setTab("info")}>Informasi akun</button>
             <button className={tab === "orders" ? "on" : ""} onClick={() => setTab("orders")}>
               Pesanan saya{orders.length > 0 && <span className="ac-n">{orders.length}</span>}
@@ -132,6 +131,14 @@ function Account({ user, profile, refreshProfile, notify }) {
         </aside>
 
         <section className="ac-main">
+          {tab === "profile" && (
+            <>
+              <h2>Profil</h2>
+              <p className="ac-desc">Atur foto, nama, username, dan deskripsi akunmu.</p>
+              <ProfileEditor user={user} profile={profile} refreshProfile={refreshProfile} notify={notify} />
+            </>
+          )}
+
           {tab === "info" && (
             <>
               <h2>Informasi akun</h2>
