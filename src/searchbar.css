@@ -1,0 +1,66 @@
+/* wrapper: nempel di garis batas section abu dan putih */
+.shop-tools{
+  position:absolute;top:0;left:50%;translate:-50% -50%;z-index:10;
+  width:min(36rem,90vw);margin:0;
+  display:flex;justify-content:center;
+  pointer-events:none;
+}
+.shop-tools>*{pointer-events:auto}
+
+.sbar{
+  position:relative;display:flex;align-items:center;gap:0.75rem;
+  width:min(26rem,100%);padding:0.8125rem 1.125rem;
+  border-radius:6.1875rem;background:#fff;
+  border:1px solid rgba(0,0,0,.08);
+  box-shadow:0 0.5rem 1.75rem -0.375rem rgba(0,0,0,.28);
+  color:var(--ink);cursor:text;
+  transition:width .55s cubic-bezier(.22,1,.36,1),box-shadow .4s,border-color .3s;
+}
+.sbar:hover{border-color:rgba(0,0,0,.16)}
+.sbar.on{
+  width:min(36rem,100%);border-color:rgba(0,0,0,.3);
+  box-shadow:0 0.75rem 2.25rem -0.5rem rgba(0,0,0,.36);
+}
+.sbar svg{flex:none;opacity:.7}
+
+.sbar input{
+  flex:1;min-width:0;border:0;background:none;font:inherit;font-size:.98rem;color:inherit;
+}
+.sbar input:focus,.sbar input:focus-visible{outline:0}
+.sbar input::placeholder{color:var(--mute)}
+
+.sbar-hint{
+  position:absolute;left:3rem;right:3.5rem;pointer-events:none;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  font-size:.98rem;color:var(--mute);
+}
+.sbar-caret{
+  display:inline-block;width:2px;height:1.1em;margin-left:2px;
+  vertical-align:text-bottom;background:var(--ink);animation:blink 1s steps(1) infinite;
+}
+
+.sbar-key{
+  font:inherit;font-size:.75rem;color:var(--mute);
+  border:1px solid var(--line);border-radius:0.375rem;padding:0.0625rem 0.45rem;
+}
+.sbar-x{
+  display:grid;place-items:center;flex:none;width:1.5rem;height:1.5rem;border-radius:50%;
+  background:var(--line);animation:sbar-pop .25s cubic-bezier(.22,1,.36,1) both;
+  transition:background .2s;
+}
+.sbar-x:hover{background:#d3d1ca}
+
+/* jumlah hasil: muncul tepat di bawah bar */
+.sbar-count{
+  position:absolute;top:calc(100% + 0.625rem);left:50%;translate:-50% 0;
+  white-space:nowrap;font-size:.85rem;color:var(--mute);
+}
+
+.grid .item{animation:item-in .5s cubic-bezier(.22,1,.36,1) both}
+
+@keyframes sbar-pop{from{opacity:0;scale:.5}}
+@keyframes item-in{from{opacity:0;translate:0 0.75rem}}
+@media(prefers-reduced-motion:reduce){
+  .sbar{transition:none}
+  .grid .item,.sbar-x{animation:none}
+}

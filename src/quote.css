@@ -1,7 +1,9 @@
+/* posisi quote dari bawah section, bebas dari grub pola */
 .love-quote{
+  --quote-bottom:12vh;
   position:absolute;z-index:1;margin:0;
   right:5vw;
-  bottom:calc(8vh + var(--gy,0px));
+  bottom:var(--quote-bottom);
   width:clamp(17.5rem,32vw,35rem);
   color:#fff;
   animation:quote-in 1s .5s cubic-bezier(.22,1,.36,1) both;

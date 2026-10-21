@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowUpRight, Heart, Plus, Recycle } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import PolaroidStack from "../components/PolaroidStack";
 import LoveQuote from "../components/LoveQuote";
+import SearchBar from "../components/SearchBar";
 
 const rp = (n) => "Rp" + n.toLocaleString("id-ID");
 
@@ -19,6 +20,8 @@ export default function Home({ user, onAdd, notify }) {
   const [products, setProducts] = useState([]);
   const [loved, setLoved] = useState(new Set());
   const [filter, setFilter] = useState("Semua");
+  const [query, setQuery] = useState("");
+  const dq = useDeferredValue(query);
 
   useEffect(() => {
     if (!supabase) return;
@@ -45,8 +48,15 @@ export default function Home({ user, onAdd, notify }) {
   const cats = useMemo(() => ["Semua", ...new Set(products.map((p) => p.category))], [products]);
   const shown = useMemo(() => {
     const base = filter === "Semua" ? products : products.filter((p) => p.category === filter);
-    return [...base].sort((a, b) => score(b) - score(a));
-  }, [products, filter]);
+    const terms = dq.toLowerCase().split(/\s+/).filter(Boolean);
+    const hit = terms.length
+      ? base.filter((p) => {
+          const hay = [p.name, p.category, p.size, p.condition, p.store_name].join(" ").toLowerCase();
+          return terms.every((t) => hay.includes(t));
+        })
+      : base;
+    return [...hit].sort((a, b) => score(b) - score(a));
+  }, [products, filter, dq]);
 
   return (
     <>
@@ -72,7 +82,15 @@ export default function Home({ user, onAdd, notify }) {
           <div className="shop-head"><h2>Koleksi <em>terbaru</em></h2>
             <div className="chips">{cats.map((c) => <button key={c} className={c === filter ? "on" : ""} onClick={() => setFilter(c)}>{c}</button>)}</div>
           </div>
-          {shown.length === 0 && <p className="none">Belum ada barang. Segera hadir.</p>}
+          <div className="shop-tools">
+            <SearchBar value={query} onChange={setQuery} />
+            {query.trim() && <span className="sbar-count">{shown.length} barang ditemukan</span>}
+          </div>
+          {shown.length === 0 && (
+            <p className="none">
+              {products.length === 0 ? "Belum ada barang. Segera hadir." : `Tidak ada barang untuk “${query.trim()}”. Coba kata lain.`}
+            </p>
+          )}
           <div className="grid">
             {shown.map((p) => (
               <article key={p.id} className="item">
