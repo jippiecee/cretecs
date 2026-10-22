@@ -79,17 +79,23 @@ export default function Home({ user, onAdd, notify }) {
         </section>
 
         <section id="shop" className="shop">
-          <div className="shop-head"><h2>Koleksi <em>terbaru</em></h2>
+          <div className="shop-head">
+            <div className="shop-title">
+              <h2>Koleksi <em>terbaru</em></h2>
+              <p className="shop-sub">
+                {products.length === 0
+                  ? "Belum ada barang. Segera hadir."
+                  : "Setiap piece dicek dan dikurasi satu per satu."}
+              </p>
+            </div>
             <div className="chips">{cats.map((c) => <button key={c} className={c === filter ? "on" : ""} onClick={() => setFilter(c)}>{c}</button>)}</div>
           </div>
           <div className="shop-tools">
             <SearchBar value={query} onChange={setQuery} />
             {query.trim() && <span className="sbar-count">{shown.length} barang ditemukan</span>}
           </div>
-          {shown.length === 0 && (
-            <p className="none">
-              {products.length === 0 ? "Belum ada barang. Segera hadir." : `Tidak ada barang untuk “${query.trim()}”. Coba kata lain.`}
-            </p>
+          {products.length > 0 && shown.length === 0 && (
+            <p className="none">{`Tidak ada barang untuk “${query.trim()}”. Coba kata lain.`}</p>
           )}
           <div className="grid">
             {shown.map((p) => (

@@ -1,0 +1,4 @@
+
+.comm-page{min-height:100vh;padding:10rem 5vw 5rem}
+.comm-page h1{font-weight:500;font-size:clamp(2.8rem,8vw,7.4rem);line-height:.98;letter-spacing:-.035em}
+.comm-page p{margin-top:1.25rem;color:var(--mute)}

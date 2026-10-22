@@ -539,3 +539,44 @@ footer{
 }
 .none{font-size:1.1rem;font-weight:400}
 footer{font-size:.92rem;font-weight:400}
+/* "Koleksi terbaru" disamain sama heading "Cretecs Community" */
+.shop-head h2,
+.shop-head h2 em{
+  font-family:"Inter Tight",system-ui,sans-serif;
+  font-weight:500;
+  letter-spacing:-.03em;
+}
+.shop-head h2{
+  font-size:clamp(2rem,4vw,3.25rem);
+  line-height:1.05;
+}
+.shop-head h2 em{font-style:italic}
+
+/* "Belum ada barang" disamain sama subteks di bawah Community */
+.none{
+  font-size:1rem;
+  font-weight:400;
+  line-height:1.5;
+  letter-spacing:normal;
+  color:var(--mute);
+}
+
+/* header section Koleksi: heading + subteks satu blok rapat (kayak Community) */
+.shop-head{margin-bottom:2.25rem}
+.shop-sub{
+  margin-top:.75rem;
+  font-size:1rem;
+  font-weight:400;
+  line-height:1.5;
+  letter-spacing:normal;
+  color:var(--mute);
+}
+/* nav: ukuran sama di semua halaman (pakai --u, bukan rem) */
+.nav{--u:1rem;font-size:var(--u);padding:calc(var(--u)*1.5) 5vw}
+@media (min-width:721px) and (hover:hover) and (pointer:fine){
+  .nav{--u:calc(100vw / 96)}
+}
+.nav .logo{gap:calc(var(--u)*.625)}
+.nav .mark{width:calc(var(--u)*2.125);height:calc(var(--u)*2.125);border-radius:calc(var(--u)*.625)}
+.nav nav{gap:calc(var(--u)*1.625);font-size:calc(var(--u)*.95)}
+.nav nav button,.nav nav a{gap:calc(var(--u)*.4375)}
