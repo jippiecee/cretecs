@@ -514,3 +514,15 @@ button.tbl-row:hover{background:var(--bg)}
 @media (min-width:721px) and (hover:hover) and (pointer:fine){
   html:has(.hero){font-size:calc(100vw / 96)}
 }
+/* font heading: Roboto Bold (ganti di sini kalau mau diubah) */
+:root{--font-head:"Roboto",system-ui,sans-serif}
+
+/* judul page login */
+.auth-box h1,.auth-box h1 em{
+  font-family:var(--font-head);font-style:normal;font-weight:700;letter-spacing:-.02em;
+}
+
+/* judul "Koleksi terbaru" di homepage */
+.shop-head h2,.shop-head h2 em{
+  font-family:var(--font-head);font-style:normal;font-weight:700;letter-spacing:-.03em;
+}
