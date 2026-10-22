@@ -526,3 +526,16 @@ button.tbl-row:hover{background:var(--bg)}
 .shop-head h2,.shop-head h2 em{
   font-family:var(--font-head);font-style:normal;font-weight:700;letter-spacing:-.03em;
 }
+/* judul "Koleksi terbaru": samain sama hero (Inter Tight 500) */
+.shop-head h2,.shop-head h2 em{
+  font-family:"Inter Tight",system-ui,sans-serif;
+  font-style:normal;font-weight:500;letter-spacing:-.035em;
+}
+/* teks "Belum ada barang" + footer: samain feel dashboard (Inter Tight, tracking dirapetin) */
+.none,
+footer{
+  font-family:"Inter Tight",system-ui,sans-serif;
+  letter-spacing:-.02em;
+}
+.none{font-size:1.1rem;font-weight:400}
+footer{font-size:.92rem;font-weight:400}
