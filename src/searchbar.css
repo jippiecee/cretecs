@@ -30,7 +30,7 @@
 .sbar input::placeholder{color:var(--mute)}
 
 .sbar-hint{
-  position:absolute;left:3rem;right:3.5rem;pointer-events:none;
+  position:absolute;left:3rem;right:1.5rem;pointer-events:none;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   font-size:.98rem;color:var(--mute);
 }
@@ -39,10 +39,6 @@
   vertical-align:text-bottom;background:var(--ink);animation:blink 1s steps(1) infinite;
 }
 
-.sbar-key{
-  font:inherit;font-size:.75rem;color:var(--mute);
-  border:1px solid var(--line);border-radius:0.375rem;padding:0.0625rem 0.45rem;
-}
 .sbar-x{
   display:grid;place-items:center;flex:none;width:1.5rem;height:1.5rem;border-radius:50%;
   background:var(--line);animation:sbar-pop .25s cubic-bezier(.22,1,.36,1) both;

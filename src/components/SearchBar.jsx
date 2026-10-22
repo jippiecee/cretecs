@@ -91,7 +91,6 @@ export default function SearchBar({ value, onChange, hints = HINTS }) {
           <i className="sbar-caret" />
         </span>
       )}
-      {idle && <kbd className="sbar-key">/</kbd>}
       {value && (
         <button type="button" className="sbar-x" aria-label="Hapus pencarian"
           onMouseDown={(e) => e.preventDefault()} onClick={clear}>
