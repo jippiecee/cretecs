@@ -580,3 +580,5 @@ footer{font-size:.92rem;font-weight:400}
 .nav .mark{width:calc(var(--u)*2.125);height:calc(var(--u)*2.125);border-radius:calc(var(--u)*.625)}
 .nav nav{gap:calc(var(--u)*1.625);font-size:calc(var(--u)*.95)}
 .nav nav button,.nav nav a{gap:calc(var(--u)*.4375)}
+/* kartu glass: tanpa backdrop-filter (paling berat saat scroll), tampilan tetap mirip */
+.glass{backdrop-filter:none;background:rgba(36,36,36,.86)}

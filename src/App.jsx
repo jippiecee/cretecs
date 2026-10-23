@@ -1,24 +1,31 @@
-import { useEffect, useRef, useState } from "react";
-import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Suspense, lazy, useEffect, useRef, useState } from "react";
+import { Link, Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Lenis from "lenis";
 import { ShoppingBag, Trash2, User, X } from "lucide-react";
 import { supabase } from "./lib/supabase";
 import { useAuth } from "./lib/useAuth";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Sell from "./pages/Sell";
-import Admin from "./pages/Admin";
-import Dashboard from "./pages/Dashboard";
-import Community from "./pages/Community";
 import ProfileMenu from "./components/ProfileMenu";
 
+// page selain Home dimuat saat dibutuhin (recharts nggak ikut kebawa di awal)
+const Login = lazy(() => import("./pages/Login"));
+const Sell = lazy(() => import("./pages/Sell"));
+const Admin = lazy(() => import("./pages/Admin"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Community = lazy(() => import("./pages/Community"));
+
 const rp = (n) => "Rp" + n.toLocaleString("id-ID");
+
+// easeInOutCubic: mulai pelan, ngebut di tengah, berhenti halus
+const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
 export default function App() {
   const { user, profile, isAdmin, isSeller, ready, refreshProfile } = useAuth();
   const loc = useLocation();
+  const navigate = useNavigate();
   const { pathname, hash } = loc;
   const lenisRef = useRef(null);
+  const firstLoad = useRef(true);
   const [cart, setCart] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [toast, setToast] = useState("");
@@ -33,6 +40,17 @@ export default function App() {
     return () => { cancelAnimationFrame(id); lenis.destroy(); lenisRef.current = null; };
   }, []);
 
+  // scroll halus ke element; durasi ngikutin jarak (min 1 dtk, max 2.2 dtk)
+  const goTo = (el) => {
+    const lenis = lenisRef.current;
+    if (!lenis || !el) return;
+    const dist = Math.abs(el.getBoundingClientRect().top);
+    lenis.scrollTo(el, {
+      duration: Math.min(2.2, Math.max(1, dist / 1400)),
+      easing: ease,
+    });
+  };
+
   // klik anchor "#xxx" di halaman yang sama -> scroll pakai Lenis
   useEffect(() => {
     const onClick = (e) => {
@@ -43,20 +61,30 @@ export default function App() {
       const el = document.querySelector(sel);
       if (!el) return;
       e.preventDefault();
-      lenisRef.current?.scrollTo(el, { duration: 1.2 });
+      goTo(el);
     };
     document.addEventListener("click", onClick);
     return () => document.removeEventListener("click", onClick);
   }, []);
 
-  // pindah halaman: ke atas, atau kalau ada #hash scroll halus ke section itu
+  // pindah halaman: ke atas, atau kalau ada #hash (dari klik link) scroll halus ke section itu
   useEffect(() => {
+    // buka/reload pertama kali: JANGAN auto-scroll, buang hash, mulai dari atas
+    if (firstLoad.current) {
+      firstLoad.current = false;
+      if (hash) {
+        navigate({ pathname, search: loc.search }, { replace: true });
+        window.scrollTo(0, 0);
+        return;
+      }
+    }
     if (!hash) { window.scrollTo(0, 0); return; }
-    const t = setTimeout(() => {
-      const el = document.querySelector(hash);
-      if (el) lenisRef.current?.scrollTo(el, { duration: 1.2 });
-    }, 60);
-    return () => clearTimeout(t);
+    let r1, r2;
+    // tunggu halaman selesai render dulu (2 frame) biar scroll nggak patah di awal
+    r1 = requestAnimationFrame(() => {
+      r2 = requestAnimationFrame(() => goTo(document.querySelector(hash)));
+    });
+    return () => { cancelAnimationFrame(r1); cancelAnimationFrame(r2); };
   }, [loc.key]);
 
   useEffect(() => { if (toast) { const t = setTimeout(() => setToast(""), 3500); return () => clearTimeout(t); } }, [toast]);
@@ -101,14 +129,16 @@ export default function App() {
         </nav>
       </header>
 
-      <Routes>
-        <Route path="/" element={<Home user={user} onAdd={add} notify={setToast} />} />
-        <Route path="/login" element={<Login notify={setToast} />} />
-        <Route path="/sell" element={sellPage} />
-        <Route path="/community" element={<Community />} />
-        <Route path="/dashboard" element={<Dashboard user={user} profile={profile} ready={ready} refreshProfile={refreshProfile} notify={setToast} />} />
-        <Route path="/admin" element={<Admin user={user} isAdmin={isAdmin} ready={ready} notify={setToast} />} />
-      </Routes>
+      <Suspense fallback={null}>
+        <Routes>
+          <Route path="/" element={<Home user={user} onAdd={add} notify={setToast} />} />
+          <Route path="/login" element={<Login notify={setToast} />} />
+          <Route path="/sell" element={sellPage} />
+          <Route path="/community" element={<Community />} />
+          <Route path="/dashboard" element={<Dashboard user={user} profile={profile} ready={ready} refreshProfile={refreshProfile} notify={setToast} />} />
+          <Route path="/admin" element={<Admin user={user} isAdmin={isAdmin} ready={ready} notify={setToast} />} />
+        </Routes>
+      </Suspense>
 
       {cartOpen && <div className="scrim" onClick={() => setCartOpen(false)} />}
       <aside className={"drawer" + (cartOpen ? " open" : "")} data-lenis-prevent>
