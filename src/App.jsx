@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Lenis from "lenis";
 import { ShoppingBag, Trash2, User, X } from "lucide-react";
@@ -16,7 +16,9 @@ const rp = (n) => "Rp" + n.toLocaleString("id-ID");
 
 export default function App() {
   const { user, profile, isAdmin, isSeller, ready, refreshProfile } = useAuth();
-  const { pathname } = useLocation();
+  const loc = useLocation();
+  const { pathname, hash } = loc;
+  const lenisRef = useRef(null);
   const [cart, setCart] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [toast, setToast] = useState("");
@@ -24,13 +26,39 @@ export default function App() {
   // Lenis smooth scroll
   useEffect(() => {
     const lenis = new Lenis({ lerp: 0.09 });
+    lenisRef.current = lenis;
     let id;
     const raf = (t) => { lenis.raf(t); id = requestAnimationFrame(raf); };
     id = requestAnimationFrame(raf);
-    return () => { cancelAnimationFrame(id); lenis.destroy(); };
+    return () => { cancelAnimationFrame(id); lenis.destroy(); lenisRef.current = null; };
   }, []);
 
-  useEffect(() => { if (!location.hash) window.scrollTo(0, 0); }, [pathname]);
+  // klik anchor "#xxx" di halaman yang sama -> scroll pakai Lenis
+  useEffect(() => {
+    const onClick = (e) => {
+      const a = e.target.closest?.("a[href^='#']");
+      if (!a) return;
+      const sel = a.getAttribute("href");
+      if (sel.length < 2) return;
+      const el = document.querySelector(sel);
+      if (!el) return;
+      e.preventDefault();
+      lenisRef.current?.scrollTo(el, { duration: 1.2 });
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
+
+  // pindah halaman: ke atas, atau kalau ada #hash scroll halus ke section itu
+  useEffect(() => {
+    if (!hash) { window.scrollTo(0, 0); return; }
+    const t = setTimeout(() => {
+      const el = document.querySelector(hash);
+      if (el) lenisRef.current?.scrollTo(el, { duration: 1.2 });
+    }, 60);
+    return () => clearTimeout(t);
+  }, [loc.key]);
+
   useEffect(() => { if (toast) { const t = setTimeout(() => setToast(""), 3500); return () => clearTimeout(t); } }, [toast]);
 
   const total = cart.reduce((s, i) => s + i.price, 0);
@@ -57,7 +85,7 @@ export default function App() {
       <header className="nav">
         <Link className="logo" to="/"><span className="mark">C</span>Cretecs</Link>
         <nav>
-          <a href="/#shop">Shop</a>
+          <Link to="/#shop">Shop</Link>
           <Link to="/community">Community</Link>
           {!user && <Link to="/login"><User size={18} />Login</Link>}
           <button className="bag" onClick={() => setCartOpen(true)}><ShoppingBag size={18} />Bag ({cart.length})</button>
