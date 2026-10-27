@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cretects - Thrift Shop Terpercaya</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="cretecs.css">
+    
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="Cretects - Platform thrift shop terpercaya untuk jual beli barang preloved berkualitas. Sustainable fashion starts here!">
+    <meta name="keywords" content="thrift shop, preloved, second hand, sustainable fashion, vintage">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛍️</text></svg>">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-gradient"></div>
+    <div class="bg-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="bi bi-bag-heart-fill"></i>
+                <span>Cretects</span>
+            </div>
+            
+            <div class="nav-search">
+                <i class="bi bi-search"></i>
+                <input type="text" placeholder="Cari barang impianmu..." id="searchInput">
+            </div>
+            
+            <div class="nav-actions">
+                <button class="nav-btn" id="sellBtn" title="Jual Produk">
+                    <i class="bi bi-plus-circle-fill"></i>
+                    <span>Jual</span>
+                </button>
+                <button class="nav-btn nav-cart" id="cartBtn" title="Keranjang Belanja">
+                    <i class="bi bi-cart3"></i>
+                    <span class="cart-badge">0</span>
+                </button>
+                <button class="nav-btn" id="userBtn" title="Profile">
+                    <i class="bi bi-person-circle"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section - Compact & Focused -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="bi bi-stars"></i>
+                <span>Preloved Berkualitas</span>
+            </div>
+            <h1 class="hero-title">
+                Thrift Shop
+                <span class="gradient-text">Terpercaya</span>
+            </h1>
+            <p class="hero-subtitle">
+                Jual & beli barang preloved favorit kamu dengan aman.<br>
+                Sustainable fashion starts here ♻️
+            </p>
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <i class="bi bi-check-circle-fill"></i>
+                    <div>
+                        <span class="stat-number">10K+</span>
+                        <span class="stat-label">Produk Terjual</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="bi bi-people-fill"></i>
+                    <div>
+                        <span class="stat-number">5K+</span>
+                        <span class="stat-label">Member Aktif</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="bi bi-star-fill"></i>
+                    <div>
+                        <span class="stat-number">4.9/5</span>
+                        <span class="stat-label">Rating</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Filter -->
+    <section class="categories">
+        <div class="container">
+            <div class="category-scroll">
+                <button class="category-chip active" data-category="all">
+                    <i class="bi bi-grid-fill"></i>
+                    Semua
+                </button>
+                <button class="category-chip" data-category="fashion">
+                    <i class="bi bi-bag-fill"></i>
+                    Fashion
+                </button>
+                <button class="category-chip" data-category="sneakers">
+                    <i class="bi bi-lightning-fill"></i>
+                    Sneakers
+                </button>
+                <button class="category-chip" data-category="accessories">
+                    <i class="bi bi-watch"></i>
+                    Aksesoris
+                </button>
+                <button class="category-chip" data-category="bags">
+                    <i class="bi bi-handbag-fill"></i>
+                    Tas
+                </button>
+                <button class="category-chip" data-category="vintage">
+                    <i class="bi bi-award-fill"></i>
+                    Vintage
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Grid -->
+    <section class="products-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Koleksi Terbaru</h2>
+                <div class="view-toggle">
+                    <button class="toggle-btn active" data-view="grid" title="Grid View">
+                        <i class="bi bi-grid-3x3-gap-fill"></i>
+                    </button>
+                    <button class="toggle-btn" data-view="list" title="List View">
+                        <i class="bi bi-list"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be rendered here by JS -->
+            </div>
+
+            <div class="load-more">
+                <button class="btn-load-more">
+                    <span>Lihat Semua Produk</span>
+                    <i class="bi bi-arrow-down-circle"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="bi bi-bag-heart-fill"></i>
+                        <span>Cretects</span>
+                    </div>
+                    <p class="footer-desc">
+                        Platform thrift shop terpercaya untuk jual beli barang preloved berkualitas.
+                        Sustainable shopping made easy.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="TikTok">
+                            <i class="bi bi-tiktok"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="WhatsApp">
+                            <i class="bi bi-whatsapp"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Belanja</h4>
+                        <a href="#">Semua Produk</a>
+                        <a href="#">Fashion</a>
+                        <a href="#">Sneakers</a>
+                        <a href="#">Aksesoris</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Bantuan</h4>
+                        <a href="#">Cara Belanja</a>
+                        <a href="#">Cara Jual</a>
+                        <a href="#">Kebijakan</a>
+                        <a href="#">FAQ</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Tentang</h4>
+                        <a href="#">Tentang Kami</a>
+                        <a href="#">Kontak</a>
+                        <a href="#">Karir</a>
+                        <a href="#">Blog</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Cretects. Made with <i class="bi bi-heart-fill"></i> by @ERLAND</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sell Modal -->
+    <div class="sell-modal" id="sellModal">
+        <div class="sell-modal-overlay" onclick="closeSellModal()"></div>
+        <div class="sell-modal-content">
+            <button class="close-sell-modal" onclick="closeSellModal()" aria-label="Tutup Modal">
+                <i class="bi bi-x-lg"></i>
+            </button>
+            
+            <div class="sell-modal-header">
+                <div class="sell-modal-icon">
+                    <i class="bi bi-bag-plus-fill"></i>
+                </div>
+                <h2 class="sell-modal-title">Jual Barang Kamu</h2>
+                <p class="sell-modal-subtitle">Hubungi admin kami untuk memulai jual barang preloved kamu</p>
+            </div>
+            
+            <div class="sell-modal-body">
+                <div class="sell-info-card">
+                    <div class="sell-info-title">
+                        <i class="bi bi-info-circle-fill"></i>
+                        <span>Cara Jual Barang</span>
+                    </div>
+                    <ul class="sell-info-list">
+                        <li>
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>Hubungi admin via sosial media</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>Kirim foto & deskripsi produk</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>Admin akan review & upload</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>Dapatkan pembeli dengan cepat!</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="sell-modal-actions">
+                <button class="sell-modal-btn sell-modal-btn-secondary" onclick="closeSellModal()">
+                    <i class="bi bi-x-circle"></i>
+                    <span>Nanti</span>
+                </button>
+                <button class="sell-modal-btn sell-modal-btn-primary" onclick="contactAdmin()">
+                    <i class="bi bi-chat-dots-fill"></i>
+                    <span>Hubungi Admin</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3><i class="bi bi-cart3"></i> Keranjang Belanja</h3>
+            <button class="close-cart" id="closeCart" aria-label="Tutup Keranjang">
+                <i class="bi bi-x"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-cart">
+                <div class="empty-cart-icon">
+                    <i class="bi bi-cart3"></i>
+                </div>
+                <p>Keranjang masih kosong</p>
+                <span>Yuk mulai belanja!</span>
+                <button class="browse-btn" onclick="closeCart()">
+                    <i class="bi bi-bag"></i>
+                    Belanja Sekarang
+                </button>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-summary">
+                <div class="cart-summary-row subtotal">
+                    <span>Subtotal</span>
+                    <span class="amount">Rp 0</span>
+                </div>
+                <div class="cart-summary-row total">
+                    <span class="label"><i class="bi bi-credit-card"></i> Total</span>
+                    <span class="amount">Rp 0</span>
+                </div>
+            </div>
+            <button class="btn-checkout" onclick="checkout()" disabled>
+                <i class="bi bi-credit-card"></i>
+                Checkout
+            </button>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- JavaScript -->
+    <script src="cretecs.js"></script>
+</body>
+</html>

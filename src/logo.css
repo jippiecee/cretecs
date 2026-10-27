@@ -1,0 +1,93 @@
+/* ===== Secondlove logo: bubble modern (hitam-putih-abu) ===== */
+:root{
+  --sl-dark:#1c1c1c;
+  --sl-mid:#6b6b68;
+  --sl-light:#b9b8b3;
+}
+
+/* specificity sengaja dinaikin biar ngalahin .mark / .nav .mark di index.css */
+span.mark.bubble{position:relative;display:block;flex:none;overflow:visible;border-radius:50%;color:#fff}
+
+.bubble-heart{
+  position:absolute;inset:0;margin:auto;width:52%;height:52%;
+  fill:#fff;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4));
+}
+.bubble > i{position:absolute;border-radius:50%;pointer-events:none}
+
+/* ---------- 1) SOLID: bubble hitam glossy + hati ---------- */
+span.mark.bubble.v-solid{
+  background:
+    radial-gradient(circle at 30% 22%,rgba(255,255,255,.85) 0 7%,rgba(255,255,255,0) 26%),
+    radial-gradient(circle at 78% 86%,rgba(255,255,255,.28),rgba(255,255,255,0) 52%),
+    linear-gradient(150deg,#555 0%,var(--sl-dark) 55%,#000 100%);
+  box-shadow:
+    inset 0 -.28em .5em rgba(0,0,0,.45),
+    inset 0 .18em .4em rgba(255,255,255,.3),
+    0 .45em .9em -.3em rgba(0,0,0,.4);
+}
+
+/* ---------- 3) GLASS: bubble kaca terang + hati hitam ---------- */
+span.mark.bubble.v-glass{
+  background:
+    radial-gradient(circle at 30% 22%,#fff 0 9%,rgba(255,255,255,0) 30%),
+    radial-gradient(circle at 74% 86%,rgba(28,28,28,.2),rgba(28,28,28,0) 55%),
+    linear-gradient(150deg,#fff 0%,#e6e5e0 55%,#c4c3bd 100%);
+  border:.09em solid var(--sl-dark);
+  box-shadow:
+    inset 0 -.25em .5em rgba(0,0,0,.14),
+    inset 0 .15em .3em rgba(255,255,255,.9),
+    0 .4em .8em -.3em rgba(0,0,0,.3);
+}
+.v-glass .bubble-heart{fill:var(--sl-dark);filter:none}
+
+/* dua bubble kecil (dipakai solid & glass) */
+.bubble-s1{
+  width:38%;height:38%;right:-22%;top:-14%;
+  background:
+    radial-gradient(circle at 32% 28%,rgba(255,255,255,.95) 0 14%,rgba(255,255,255,0) 40%),
+    radial-gradient(circle at 60% 60%,rgba(255,255,255,.6),rgba(185,184,179,.55));
+  border:1px solid #fff;
+  box-shadow:0 0 0 1px rgba(28,28,28,.28),0 .2em .5em -.1em rgba(0,0,0,.25);
+  animation:sl-float 4.2s ease-in-out infinite;
+}
+.bubble-s2{
+  width:17%;height:17%;right:-30%;top:34%;
+  background:radial-gradient(circle at 32% 28%,#fff 0 18%,rgba(255,255,255,0) 55%),rgba(185,184,179,.7);
+  border:1px solid #fff;
+  box-shadow:0 0 0 1px rgba(28,28,28,.25);
+  animation:sl-float 3.4s ease-in-out -1.2s infinite;
+}
+
+/* ---------- 2) TWIN: dua bubble numpuk (gelap + kaca) = "second" ---------- */
+span.mark.bubble.v-twin{border-radius:0;background:none;box-shadow:none}
+.v-twin .tw-a{
+  left:0;bottom:0;width:76%;height:76%;
+  background:
+    radial-gradient(circle at 30% 22%,rgba(255,255,255,.8) 0 7%,rgba(255,255,255,0) 26%),
+    linear-gradient(150deg,#555 0%,var(--sl-dark) 55%,#000 100%);
+  box-shadow:inset 0 -.25em .45em rgba(0,0,0,.45),0 .4em .8em -.3em rgba(0,0,0,.4);
+}
+.v-twin .tw-a .bubble-heart{width:46%;height:46%}
+.v-twin .tw-b{
+  right:0;top:0;width:60%;height:60%;
+  background:
+    radial-gradient(circle at 30% 24%,rgba(255,255,255,.95) 0 9%,rgba(255,255,255,0) 32%),
+    linear-gradient(150deg,rgba(255,255,255,.55),rgba(185,184,179,.35));
+  border:1px solid rgba(28,28,28,.4);
+  -webkit-backdrop-filter:blur(1.5px);backdrop-filter:blur(1.5px);
+  box-shadow:inset 0 -.15em .3em rgba(0,0,0,.1);
+  animation:sl-float 4.2s ease-in-out infinite;
+}
+/* .tw-a punya <svg> di dalam <i>, jadi i harus jadi box posisi */
+.v-twin .tw-a{position:absolute}
+
+@keyframes sl-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-.18em)}}
+@media (prefers-reduced-motion:reduce){.bubble-s1,.bubble-s2,.v-twin .tw-b{animation:none}}
+
+/* wordmark */
+.wordmark{font-weight:600;letter-spacing:-.025em;margin-left:.3em}
+.wordmark em{
+  font-size:1.2em;margin-left:.04em;letter-spacing:-.01em;line-height:1;
+  background:linear-gradient(95deg,var(--sl-mid),var(--sl-dark));
+  -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+}

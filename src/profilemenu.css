@@ -1,0 +1,28 @@
+.pm{position:relative;display:inline-flex}
+.nav nav .pm-btn{padding:0;border-radius:50%;line-height:0}
+
+.pm-ava{position:relative;flex:none;width:calc(var(--u)*2.25);height:calc(var(--u)*2.25);border-radius:50%;overflow:hidden;display:grid;place-items:center;background:var(--ink);color:#fff;font-weight:500;font-size:calc(var(--u)*.95);line-height:1}
+.pm-ava img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pm-ava.big{width:calc(var(--u)*2.75);height:calc(var(--u)*2.75);font-size:calc(var(--u)*1.1)}
+
+/* geser popover ke kanan: makin negatif = makin ke kanan */
+.pm-pop{
+  --shift:calc(var(--u)*-.75);
+  position:absolute;right:var(--shift);top:calc(100% + var(--u)*.75);z-index:10;
+  width:min(calc(var(--u)*17.5),86vw);
+  font-size:calc(var(--u)*.95);
+  background:var(--bg);border:1px solid var(--line);
+  border-radius:calc(var(--u)*1.2);padding:calc(var(--u)*.5);
+  box-shadow:0 calc(var(--u)*1) calc(var(--u)*2.5) rgba(0,0,0,.14);
+  transform-origin:top right;animation:pmIn .22s cubic-bezier(.22,1,.36,1);
+}
+@keyframes pmIn{from{opacity:0;transform:translateY(-.375rem) scale(.97)}to{opacity:1;transform:none}}
+
+.pm-me{display:flex;align-items:center;gap:calc(var(--u)*.75);padding:calc(var(--u)*.75) calc(var(--u)*.75) calc(var(--u)*.875);border-bottom:1px solid var(--line);margin-bottom:calc(var(--u)*.375)}
+.pm-me>div{display:flex;flex-direction:column;min-width:0}
+.pm-me b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pm-me small{color:var(--mute);font-size:calc(var(--u)*.8);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.pm-pop .pm-item{display:flex;align-items:center;gap:calc(var(--u)*.625);width:100%;padding:calc(var(--u)*.6875) calc(var(--u)*.75);border-radius:calc(var(--u)*.8);text-align:left}
+.pm-pop .pm-item.out{color:#9b2c22}
+.pm-sep{height:1px;background:var(--line);margin:calc(var(--u)*.375) calc(var(--u)*.25)}

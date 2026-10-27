@@ -1,0 +1,52 @@
+/* geser grub pola (card putih + polaroid) di sini */
+.stage{--cw:min(21.25rem,88vw);--ch:14.0625rem;--gx:7vw;--gy:15vh}
+
+.stage .white-card{
+  left:calc(5vw + var(--gx));
+  bottom:calc(8vh + var(--gy));
+  z-index:3;
+}
+
+.polaroids{
+  --w:clamp(10.625rem,36vw,16.25rem);
+  position:absolute;z-index:1;width:0;height:0;
+  left:max(calc(5vw + var(--gx) + var(--cw)/2),calc(var(--w)*1.1));
+  bottom:calc(8vh + var(--gy) + var(--ch) - var(--w)*.22);
+}
+@media(min-width:721px){
+  .polaroids{--w:clamp(15.625rem,16vw,18.75rem)}
+}
+@media(max-width:720px){
+  .stage{--ch:13.4375rem;--gx:0px;--gy:2vh}
+}
+
+.polaroid{
+  position:absolute;left:0;top:0;margin:0;
+  width:var(--w);
+  padding:calc(var(--w)*.055) calc(var(--w)*.055) calc(var(--w)*.21);
+  background:#fbfaf6;
+  border-radius:0.375rem;
+  z-index:var(--z);
+  box-shadow:0 1px 2px rgba(0,0,0,.25),0 0.875rem 1.875rem -0.5rem rgba(0,0,0,.55);
+  transform:translate(calc(-50% + var(--x)),calc(-100% + var(--y))) rotate(var(--r));
+  animation:pol-in .9s cubic-bezier(.22,1,.36,1) both;
+  animation-delay:var(--d);
+}
+
+.polaroid img{
+  display:block;width:100%;aspect-ratio:4/5;object-fit:cover;
+  border-radius:2px;background:#ddd;user-select:none;
+}
+.polaroid figcaption{
+  position:absolute;left:0;right:0;bottom:calc(var(--w)*.06);
+  text-align:center;color:#555;letter-spacing:.02em;
+  font-size:clamp(.72rem,1vw,.95rem);
+}
+
+@keyframes pol-in{
+  from{opacity:0;translate:0 3.75rem}
+  to{opacity:1;translate:0 0}
+}
+@media(prefers-reduced-motion:reduce){
+  .polaroid{animation:none}
+}
