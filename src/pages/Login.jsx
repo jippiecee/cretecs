@@ -53,7 +53,7 @@ export default function Login({ notify }) {
             <Brand />
           </Link>
 
-          <h1>{isLogin ? <>Masuk ke <em>Secondlove</em></> : <>Buat akun <em>Secondlove</em></>}</h1>
+          <h1>{isLogin ? "Masuk" : "Buat akun"}</h1>
 
           <button type="button" className="auth-social" onClick={google}>
             <b>G</b> Lanjut dengan Google

@@ -583,3 +583,11 @@ footer{font-size:.92rem;font-weight:400}
 /* kartu glass: tanpa backdrop-filter (paling berat saat scroll), tampilan tetap mirip */
 .glass{backdrop-filter:none;background:rgba(36,36,36,.86)}
 
+/* ===== Login: spacing konsisten (semua jarak antar blok = 1.25rem) ===== */
+.auth-box{gap:1.25rem}
+.auth-logo{margin-bottom:.5rem}
+.auth-box h1{font-size:clamp(1.75rem,2.3vw,2.125rem);line-height:1.1;margin-bottom:.75rem}
+.auth-or{margin:0}
+.auth-form{gap:1.25rem}
+.auth-form label{gap:.5rem}
+.auth-switch{margin:0}
